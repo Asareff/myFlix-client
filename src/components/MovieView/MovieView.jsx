@@ -12,7 +12,7 @@ export const MovieView = () => {
   useEffect(() => {
     const fetchMovieData = async () => {
       try {
-        const response = await fetch(`https://your-api-url/movies/${title}`);
+        const response = await fetch(`https://movies-service-330159435834.herokuapp.com/movies/${title}`);
         if (!response.ok) {
           throw new Error('Failed to fetch movie data');
         }
