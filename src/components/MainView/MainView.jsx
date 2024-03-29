@@ -31,6 +31,11 @@ const MainView = () => {
     }
   }, [token]);
 
+  // Ensure viewMovies is initialized as an array
+  useEffect(() => {
+    setViewMovies(movies);
+  }, [movies]);
+
   return (
     <BrowserRouter>
       <NavigationBar
@@ -84,6 +89,10 @@ const MainView = () => {
                   </>
                 )
               }
+            />
+            <Route
+              path=""
+              element={<Navigate to="/" />} // This handles the case when there's no route specified
             />
           </Routes>
         </Row>
