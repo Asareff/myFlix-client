@@ -5,45 +5,27 @@ import { useParams, useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { MovieCard } from "../MovieCard/MovieCard";
 
-export const MovieView = ({
-  user,
-  addFav,
-  removeFav,
-  favMovies,
-  moviedata,
-  handleFavClick
-}) => {
-  const { title: urlTitle } = useParams();
+export const MovieView = () => {
+  const { title } = useParams();
   const [movie, setMovie] = useState(null);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const [isFav, setIsFav] = useState(false);
-  const topRef = useRef(null);
-  const { pathname } = useLocation();
 
   useEffect(() => {
-    const movie = moviedata.find((m) => m.Title === urlTitle);
-
-    if (movie) {
-      const similarMovies = moviedata.filter(
-        (m) => m.Genre.Name === movie.Genre.Name && m._id !== movie._id
-      );
-      setMovie(movie);
-      setSimilarMovies(similarMovies);
-      setIsFav(user.FavoriteMovies.includes(movie._id));
-    }
-  }, [urlTitle, moviedata, user, favMovies]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 300);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (movie) {
-    setIsFav(favMovies.includes(movie._id));
-    }
-  }, [favMovies, movie]);
+    const fetchMovieData = async () => {
+      try {
+        const response = await fetch(`https://your-api-url/movies/${title}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch movie data');
+        }
+        const data = await response.json();
+        console.log('Movie data:', data); // Log the response data
+        setMovie(data); // Assuming the API returns a single movie object
+      } catch (error) {
+        console.error('Error fetching movie data:', error);
+      }
+    };
+  
+    fetchMovieData();
+  }, [title]);
 
   return (
     <>
