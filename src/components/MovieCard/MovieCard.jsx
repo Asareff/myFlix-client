@@ -5,24 +5,26 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export const MovieCard = ({ movie, user, setUser, token }) => {
-  const isFavorite = user?.FavoriteMovies?.find((m) => m === movie._id);
+  const isFavorite = user?.FavoriteMovies?.find((m) => m === movie?._id);
   const [image, setImage] = useState("");
 
   const handleFavoriteButton = () => {
-    const method = isFavorite ? "delete" : "post";
-    fetch(
-      `https://movies-service-330159435834.herokuapp.com/users/${user.Username}/movies/${movie._id}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        method,
-      }
-    )
-      .then((result) => result.json())
-      .then((data) => setUser(data));
+    if (user && user.Username && movie && movie._id) {
+      const method = isFavorite ? "delete" : "post";
+      fetch(
+        `https://movies-service-330159435834.herokuapp.com/users/${user.Username}/movies/${movie._id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method,
+        }
+      )
+        .then((result) => result.json())
+        .then((data) => setUser(data));
+    }
   };
 
   useEffect(() => {
-    if (movie.imageUrl) {
+    if (movie && movie.imageUrl) {
       setImage(movie.imageUrl);
     }
   }, [movie]);

@@ -13,28 +13,12 @@ const MainView = () => {
   const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [viewMovies, setViewMovies] = useState([]);
 
   useEffect(() => {
-    if (token) {
-      fetch("https://movies-service-330159435834.herokuapp.com/movies", {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    fetch('https://movies-service-330159435834.herokuapp.com/movies')
       .then(response => response.json())
-      .then(data => {
-        setMovies(data);
-        setViewMovies(data);
-      })
-      .catch(error => {
-        console.error("Error fetching movies:", error);
-      });
-    }
-  }, [token]);
-
-  // Ensure viewMovies is initialized as an array
-  useEffect(() => {
-    setViewMovies(movies);
-  }, [movies]);
+      .then(data => setMovies(data.movies));
+  }, []);
 
   return (
     <BrowserRouter>
@@ -44,9 +28,6 @@ const MainView = () => {
           setUser(null);
           setToken(null);
           localStorage.clear();
-        }}
-        onSearch={(query) => {
-          setViewMovies(movies.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase())));
         }}
       />
       <Container>
@@ -74,25 +55,17 @@ const MainView = () => {
               path="/"
               element={
                 !user ? <Navigate to="/login" replace /> : (
-                  <>
-                    {viewMovies && Array.isArray(viewMovies) && viewMovies.length > 0 ? (
-                      viewMovies.map(movie => (
-                        <Col className="mb-4" key={movie.id} xl={2} lg={3} md={4} xs={6}>
-                          <MovieCard movie={movie} />
-                        </Col>
-                      ))
-                    ) : (
-                      <Col style={{ color: "white" }}>
-                        <p>The list is empty. Loading data from API...</p>
-                      </Col>
-                    )}
-                  </>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                    {movies.map(movie => (
+                      <div key={movie._id} style={{ width: '300px', margin: '10px' }}>
+                        <h2>{movie.title}</h2>
+                        <p>{movie.description}</p>
+                        <img src={movie.imageUrl} alt={movie.title} style={{ height: '520px', objectFit: 'cover' }} />
+                      </div>
+                    ))}
+                  </div>
                 )
               }
-            />
-            <Route
-              path=""
-              element={<Navigate to="/" />} // This handles the case when there's no route specified
             />
           </Routes>
         </Row>
