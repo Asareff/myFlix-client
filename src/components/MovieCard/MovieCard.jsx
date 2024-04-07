@@ -4,22 +4,17 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export const MovieCard = ({ movie, user, setUser, token }) => {
+export const MovieCard = ({ movie, user, setUser, token, onAddToFavorites, onRemoveFromFavorites }) => {
   const isFavorite = user?.FavoriteMovies?.find((m) => m === movie?._id);
   const [image, setImage] = useState("");
 
   const handleFavoriteButton = () => {
-    if (user && user.Username && movie && movie._id) {
-      const method = isFavorite ? "delete" : "post";
-      fetch(
-        `https://movies-service-330159435834.herokuapp.com/users/${user.Username}/movies/${movie._id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          method,
-        }
-      )
-        .then((result) => result.json())
-        .then((data) => setUser(data));
+    if (isFavorite) {
+      // If already in favorites, remove it
+      onRemoveFromFavorites(movie._id);
+    } else {
+      // If not in favorites, add it
+      onAddToFavorites(movie._id);
     }
   };
 
@@ -34,7 +29,7 @@ export const MovieCard = ({ movie, user, setUser, token }) => {
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{movie.title}</Card.Title>
-        <Card.Text>{movie.director.name}</Card.Text>
+        <Card.Text>{movie.director?.name}</Card.Text> {/* Add null check here */}
         <Row>
           <Col>
             <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
@@ -42,11 +37,13 @@ export const MovieCard = ({ movie, user, setUser, token }) => {
             </Link>
           </Col>
         </Row>
-        <Col>
-          <Button variant="link" onClick={handleFavoriteButton}>
-            {isFavorite ? "Remove" : "Add"} favorite
-          </Button>
-        </Col>
+        <Row>
+          <Col>
+            <Button variant="link" onClick={handleFavoriteButton}>
+              {isFavorite ? "Remove" : "Add"} to Favorites
+            </Button>
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );
@@ -64,5 +61,7 @@ MovieCard.propTypes = {
   }).isRequired,
   user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired,
+  onAddToFavorites: PropTypes.func.isRequired,
+  onRemoveFromFavorites: PropTypes.func.isRequired,
 };
