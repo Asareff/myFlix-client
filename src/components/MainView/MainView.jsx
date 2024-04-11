@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MovieCard } from "../MovieCard/MovieCard";
 import { LoginView } from "../login-view/login-view";
@@ -101,7 +101,18 @@ return (
           <Route
             path="/profile"
             element={
-              user ? <ProfileView user={user} token={token} movies={movies} onLoggedOut={() => { setUser(null); setToken(null); localStorage.clear(); }} /> : <Navigate to="/login" replace />
+              user ? (
+                <ProfileView
+                  user={user}
+                  setUser={setUser}
+                  token={token}
+                  movies={movies}
+                  removeFav={removeFav}
+                  addFav={addFav}
+                />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
           {/* Movies route */}

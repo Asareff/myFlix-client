@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
+import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import { Col, Row, Container } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { MovieCard } from "../MovieCard/MovieCard";
-import { useNavigate } from "react-router-dom";
 import "./profile-view.scss";
 
-const ProfileView = ({ user, setUser, token, movies }) => {
+const ProfileView = ({ user, setUser, token, movies, removeFav, addFav }) => {
   const [username, setUsername] = useState(user.Username);
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(moment(user.Birthday).utc().format('YYYY-MM-DD'));
