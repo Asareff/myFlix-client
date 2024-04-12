@@ -1,29 +1,71 @@
-.card {
-    margin-top: 2rem;
-  }
-  
-  .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-label {
-    font-weight: bold;
-  }
-  
-  .form-control {
-    border-radius: 0;
-  }
-  
-  .btn-primary {
-    margin-top: 1rem;
-  }
-  
-  .btn-danger {
-    margin-top: 1rem;
-  }
-  
+.profile-container {
+  padding: 20px;
+}
+
+.profile-card {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-info p {
+  margin-bottom: 10px;
+}
+
+.profile-form {
+  margin-top: 20px;
+}
+
+.profile-form label {
+  font-weight: bold;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.profile-buttons {
+  margin-top: 20px;
+}
+
+.profile-buttons button {
+  margin-right: 10px;
+}
+
+.confirmation-modal-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.confirmation-modal-body {
+  margin-bottom: 20px;
+}
+
+.confirmation-modal-footer {
+  justify-content: flex-end;
+}
+
+.profile-button {
+  margin-right: 10px;
+}
+
+.mt-5.col-md-7 {
+  margin-top: 0px !important;
+  margin-left: 80px !important;
+}

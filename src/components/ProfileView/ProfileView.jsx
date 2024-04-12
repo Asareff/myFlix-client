@@ -1,92 +1,106 @@
-import { useState } from "react";
-import {useNavigate} from "react-router-dom";
-import { Col, Row, Container } from "react-bootstrap";
-import { Button, Card, Form } from "react-bootstrap";
-import { MovieCard } from "../MovieCard/MovieCard";
+import React, { useState } from "react";
+import { Col, Row, Container, Form, Button, Modal } from "react-bootstrap";
 import "./profile-view.scss";
 
-const ProfileView = ({ user, setUser, token, movies, removeFav, addFav }) => {
-  const [username, setUsername] = useState(user.Username);
-  const [email, setEmail] = useState(user.Email);
-  const [birthday, setBirthday] = useState(moment(user.Birthday).utc().format('YYYY-MM-DD'));
+const ProfileView = ({ user, setUser, token }) => {
+  console.log(user); // Add this line to check the user object
+  const [newUserData, setNewUserData] = useState({
+    Username: user ? user.Username : "",
+    Email: user ? user.Email : "",
+    Birthday: user ? user.Birthday : "",
+  });
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const navigate = useNavigate();
-
-  const favoriteMovies = movies.filter((m) => user.FavoriteMovies.includes(m._id));
-
-  const handleUpdate = (event) => {
-    event.preventDefault();
-
-    const data = {
-      Username: username,
-      Email: email,
-      Birthday: birthday
-    };
-
-    fetch(`https://movies-service-330159435834.herokuapp.com/users/${user.Username}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then(async (response) => {
-      if (response.ok) {
-        const updatedUser = await response.json();
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        setUser(updatedUser);
-        alert("Update was successful");
-      } else {
-        alert("Update failed");
-      }
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-    });
+  const handleChange = (e) => {
+    setNewUserData({ ...newUserData, [e.target.name]: e.target.value });
   };
 
-  const handleDelete = () => {
-    fetch(`https://movies-service-330159435834.herokuapp.com/users/${user.Username}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      if (response.ok) {
-        setUser(null);
-        alert("User has been deleted");
-        localStorage.clear();
-        navigate("/"); // go back to home page
-      } else {
-        alert("Something went wrong.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `https://movies-service-330159435834.herokuapp.com/users/${user.Username}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newUserData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update user data");
       }
-    });
+      const updatedUser = await response.json();
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      alert("Update was successful");
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      alert("Update failed");
+    }
   };
+
+  const handleDeregister = () => {
+    setShowConfirmation(true);
+  };
+
+  const confirmDeregister = async () => {
+    try {
+      const response = await fetch(
+        `https://movies-service-330159435834.herokuapp.com/users/${user.Username}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to deregister user");
+      }
+      setUser(null);
+      alert("User has been deleted");
+      localStorage.clear();
+      // Redirect to login page or perform any other action after deregistration
+    } catch (error) {
+      console.error("Error deregistering user:", error);
+      alert("Something went wrong.");
+    } finally {
+      setShowConfirmation(false);
+    }
+  };
+
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
+  };
+
+  if (!user) {
+    return <div>Loading...</div>; // or any other fallback UI
+  }
 
   return (
     <Container className="my-5">
       <Row>
         <Col md={4} className="text-center text-md-start ms-3">
-          <Card>
-            <Card.Body>
-              <Card.Title>My Profile</Card.Title>
-              <Card.Text>Username: {username}</Card.Text>
-              <Card.Text>Email: {email}</Card.Text>
-              <Card.Text>Birthday: {moment(birthday).format('YYYY-MM-DD')}</Card.Text>
-            </Card.Body>
-          </Card>
+        <div className="profile-card">
+          <h3 className="profile-title">My Profile</h3>
+          <p>Username: {user.username}</p> {/* Note the lowercase 'username' */}
+          <p>Email: {user.email}</p> {/* Note the lowercase 'email' */}
+          <p>Birthday: {user.birthday}</p> {/* Ensure that the property name is correct */}
+        </div>
         </Col>
         <Col md={7} className="mt-5">
-          <Form onSubmit={handleUpdate}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername">
               <Form.Label>Username:</Form.Label>
               <Form.Control
                 className="mb-3"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                name="Username"
+                value={newUserData.Username}
+                onChange={handleChange}
                 minLength="5"
               />
             </Form.Group>
@@ -95,8 +109,9 @@ const ProfileView = ({ user, setUser, token, movies, removeFav, addFav }) => {
               <Form.Control
                 className="mb-3"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="Email"
+                value={newUserData.Email}
+                onChange={handleChange}
               />
             </Form.Group>
             <Form.Group controlId="formBirthday">
@@ -104,38 +119,48 @@ const ProfileView = ({ user, setUser, token, movies, removeFav, addFav }) => {
               <Form.Control
                 className="mb-2"
                 type="date"
-                value={birthday}
-                onChange={(e) => setBirthday(e.target.value)}
+                name="Birthday"
+                value={newUserData.Birthday}
+                onChange={handleChange}
               />
             </Form.Group>
             <Button type="submit" className="mt-3 me-2">Update</Button>
-            <Button onClick={handleDelete} className="mt-3 bg-danger border-danger text-white">Delete User</Button>
+            <Button onClick={handleDeregister} className="mt-3 bg-danger border-danger text-white">Delete User</Button>
           </Form>
         </Col>
       </Row>
-      <Row>
-        <h2 className="mt-5 text-center text-md-start">Favorite Movies</h2>
-        <Row className="justify-content-center">
-          {favoriteMovies.length !== 0 ? (
-            favoriteMovies.map((movie) => (
-              <Col key={movie._id} sm={7} md={5} lg={3} xl={2} className="mx-2 mt-2 mb-5 col-6 similar-movies-img">
-                <MovieCard
-                  movie={movie}
-                  removeFav={removeFav}
-                  addFav={addFav}
-                  isFavorite={user.FavoriteMovies.includes(movie._id)}
-                />
-              </Col>
-            ))
-          ) : (
-            <Col>
-              <p>There are no favorite movies</p>
-            </Col>
-          )}
-        </Row>
-      </Row>
+      <Modal
+        className="confirmation-modal"
+        show={showConfirmation}
+        onHide={handleCloseConfirmation}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="confirmation-modal-title">
+            Confirm Deregistration
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="confirmation-modal-body">
+          Are you sure you want to delete your account?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="profile-button"
+            variant="secondary"
+            onClick={handleCloseConfirmation}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="profile-button"
+            variant="danger"
+            onClick={confirmDeregister}
+          >
+            Delete Account
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
 
-export { ProfileView };
+export default ProfileView;

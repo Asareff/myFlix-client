@@ -1,8 +1,10 @@
+import React from "react"
 import "./MovieCard.scss";
 import PropTypes from "prop-types";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 
 export const MovieCard = ({ movie, user, setUser, token, onAddToFavorites, onRemoveFromFavorites }) => {
   const isFavorite = user?.FavoriteMovies?.find((m) => m === movie?._id);
