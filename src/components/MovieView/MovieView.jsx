@@ -27,8 +27,8 @@ export const MovieView = ({ movies }) => {
                     <div className="my-1">
                         <span className="h1">{movie.title}</span>
                     </div>
-                    <p>Director: {movie.director && movie.director.name}</p>
-                    <p>Genre: {movie.genre ? movie.genre.name : 'Unknown'}</p>
+                    <p>Director: {movie['director.name']}</p>
+                    <p>Genre: {movie['genre.name']}</p>
                     <p>Description: {movie.description}</p>
                     <Link to={`/`}>
                         <Button className="my-2">Back</Button>
@@ -48,7 +48,9 @@ MovieView.propTypes = {
             director: PropTypes.shape({
                 name: PropTypes.string
             }),
-            genre: PropTypes.string.isRequired,
+            genre: PropTypes.shape({
+                name: PropTypes.string
+            }),
             description: PropTypes.string.isRequired,
         })
     ).isRequired,
