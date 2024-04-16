@@ -17,8 +17,7 @@ const MainView = () => {
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const { movieId } = useParams();
-  const movie = movies.find((movie) => movie._id === movieId);
+  
 
 
   useEffect(() => {
@@ -31,13 +30,13 @@ const MainView = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Selected Genre:", selectedGenre);
     setFilteredMovies(movies.filter(movie => {
       const titleMatches = !search || movie.title.toLowerCase().includes(search.toLowerCase());
-      const genreMatches = !selectedGenre || (movie.genre && movie.genre.name.toLowerCase() === selectedGenre.toLowerCase());
+      const genreMatches = !selectedGenre || (movie['genre.name'].toLowerCase() === selectedGenre.toLowerCase());
       return titleMatches && genreMatches;
     }));
   }, [movies, search, selectedGenre]);
+  
   
 
   return (
