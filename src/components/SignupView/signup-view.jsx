@@ -39,36 +39,39 @@ export const SignupView = () => {
 
   return (
     <Container>
-      <Form className="signupForm" onSubmit={handleSubmit}>
+      <Form className="form-container" onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
-          <Form.Label>Username:</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength="3"
+            placeholder="Username"
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
-          <Form.Label>Password:</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
           />
         </Form.Group>
         <Form.Group controlId="formEmail">
-          <Form.Label>Email:</Form.Label>
+          <Form.Label></Form.Label>
           <Form.Control
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="Email"
           />
         </Form.Group>
-        <Button variant="primary" type="submit" className="submit-button">
+        <Button variant="primary" type="submit" className="btn draw-border">
           Sign Up
         </Button>
       </Form>

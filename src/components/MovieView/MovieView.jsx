@@ -4,7 +4,6 @@ import { useParams, Link } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-
 export const MovieView = ({ movies }) => {
     const { movieId } = useParams();
     const movie = movies.find((movie) => movie._id === movieId);
@@ -21,15 +20,23 @@ export const MovieView = ({ movies }) => {
             {/* Movie Details */}
             <Row className="my-5 justify-content-md-center">
                 <Col md={7} className="col-12">
-                    <img src={movie.imageUrl} alt="movie cover" className="mx-auto w-100" />
+                    <img src={movie.imageUrl} alt="movie cover" className="mx-auto w-100 movie-cover" />
                 </Col>
                 <Col md={5} className="col-12">
                     <div className="my-1">
-                        <span className="h1">{movie.title}</span>
+                        <h1>{movie.title}</h1>
                     </div>
-                    <p>Director: {movie['director.name']}</p>
-                    <p>Genre: {movie['genre.name']}</p>
-                    <p>Description: {movie.description}</p>
+                    <div className="details">
+                        <div className="detail-item">
+                            <strong>Director:</strong> {movie['director.name']}
+                        </div>
+                        <div className="detail-item">
+                            <strong>Genre:</strong> {movie['genre.name']}
+                        </div>
+                        <div className="detail-item">
+                            <strong>Description:</strong> {movie.description}
+                        </div>
+                    </div>
                     <Link to={`/`}>
                         <Button className="my-2">Back</Button>
                     </Link>

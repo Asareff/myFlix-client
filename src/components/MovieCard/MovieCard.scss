@@ -17,7 +17,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    background-color: #f1f0f0;
+    background-color: rgb(200, 207, 219);
   }
 
   .card-title.h5 {
@@ -45,7 +45,7 @@
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: rgb(117, 117, 189);
+      background-color: rgb(29, 74, 104) !important;
       color: white;
     }
 

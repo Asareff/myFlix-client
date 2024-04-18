@@ -7,7 +7,7 @@
 .movie-cover {
   max-width: 100%;
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .my-2.btn.btn-primary {
@@ -19,17 +19,17 @@
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 30px !important;
 }
 
 .my-2.btn.btn-primary:hover {
-  background-color: rgb(117, 117, 189);
+  background-color: rgb(29, 74, 104);
 }
 
 .mx-auto.w-100 {
   max-width: 320px;
   width: 100%;
   height: auto;
-  padding-bottom: 20px;
 }
 
 .movie-container {
@@ -37,4 +37,14 @@
   margin-top: 30px !important;
   margin-bottom: 30px !important;
   border-radius: 30px;
+  padding-left: 60px !important;
+  padding-right: 60px !important;
+}
+
+h1 {
+  margin-bottom: 30px !important;
+}
+
+strong {
+  font-size: 20px !important;
 }

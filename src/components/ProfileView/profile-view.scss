@@ -3,7 +3,7 @@
 }
 
 .profile-card {
-  background-color: #f8f9fa;
+  background-color: rgb(200, 207, 219);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -68,29 +68,4 @@
 .mt-5.col-md-7 {
   margin-top: 0px !important;
   margin-left: 80px !important;
-}
-
-.mt-3.me-2.btn.btn-primary {
-  padding: 8px 16px;
-      margin-bottom: 15px;
-      color: #fff;
-      background-color: rgb(3, 47, 76);
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgb(117, 117, 189);
-      }
-}
-
-.mt-3.bg-danger.border-danger.text-white.btn.btn-primary {
-  padding: 8px 16px;
-      margin-bottom: 15px;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-      cursor: pointer;
 }

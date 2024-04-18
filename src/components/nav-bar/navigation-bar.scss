@@ -2,7 +2,7 @@
   background-color: #e9eef6;
   border-bottom: 1px solid #dee2e6;
   position: fixed;
-  top: 0px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
@@ -10,7 +10,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-// Using important
 .navbar-brand {
   font-weight: bold;
   font-size: 30px !important;
@@ -20,9 +19,24 @@
 .navbar-nav .nav-link {
   font-size: 20px;
   color: #000000;
-}
+  position: relative;
 
+  &:hover::after {
+    width: 100%;
+    transition: width 0.5s ease;
+  }
 
-.navbar-nav .nav-link:hover::after {
-  opacity: 5;
+  &::after {
+    display: block;
+    border-radius: 2px;
+    content: ''; 
+    bottom: -3px;
+    height: 3px;
+    background: rgb(3, 47, 76);
+    width: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.5s ease;
+  }
 }

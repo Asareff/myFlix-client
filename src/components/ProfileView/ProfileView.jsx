@@ -86,47 +86,9 @@ const ProfileView = ({ user, setUser, token }) => {
         <Col md={4} className="text-center text-md-start ms-3">
         <div className="profile-card">
           <h3 className="profile-title">My Profile</h3>
-          <p>Username: {user.username}</p> {/* Note the lowercase 'username' */}
-          <p>Email: {user.email}</p> {/* Note the lowercase 'email' */}
-          <p>Birthday: {user.birthday}</p> {/* Ensure that the property name is correct */}
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
         </div>
-        </Col>
-        <Col md={7} className="mt-5">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username:</Form.Label>
-              <Form.Control
-                className="mb-3"
-                type="text"
-                name="Username"
-                value={newUserData.Username}
-                onChange={handleChange}
-                minLength="5"
-              />
-            </Form.Group>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email:</Form.Label>
-              <Form.Control
-                className="mb-3"
-                type="email"
-                name="Email"
-                value={newUserData.Email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formBirthday">
-              <Form.Label>Birthday:</Form.Label>
-              <Form.Control
-                className="mb-2"
-                type="date"
-                name="Birthday"
-                value={newUserData.Birthday}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Button type="submit" className="mt-3 me-2">Update</Button>
-            <Button onClick={handleDeregister} className="mt-3 bg-danger border-danger text-white">Delete User</Button>
-          </Form>
         </Col>
       </Row>
       <Modal
