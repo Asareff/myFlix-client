@@ -3,7 +3,7 @@
 MyFlix is a single-page application (SPA) built using React, React Bootstrap, React Router, and Bootstrap. It allows users to browse and explore a curated collection of movies. Users can view detailed information about each movie, search for specific titles, and mark movies as favorites. The application is designed to be responsive and mobile-friendly, providing an optimal viewing experience across devices.
 
 ## Accessing the Hosted Site
-MyFlix is now hosted and accessible online. You can visit the site at [MyFlix Online](https://deploy-preview-2--myflixonline.netlify.app/).
+MyFlix is now hosted and accessible online. You can visit the site at [MyFlix Online](https://myflixonline.netlify.app/signup).
 
 ## Prerequisites
 
