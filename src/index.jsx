@@ -1,35 +1,20 @@
-// src/index.jsx
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import MainView from './components/MainView/MainView';
-import MovieView from './components/MovieView/MovieView';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.scss';
 
 const MyFlixApplication = () => {
-  const [currentView, setCurrentView] = useState('main');
-  const [selectedMovie, setSelectedMovie] = useState({ title: 'Test Movie' });
-
-  const handleCardClick = () => {
-    setCurrentView('movie');
-  };
-
-  const handleBackButtonClick = () => {
-    setCurrentView('main');
-  };
-
   return (
-    <div>
-      {currentView === 'main' ? (
-        <MainView handleCardClick={handleCardClick} />
-      ) : (
-        <MovieView movie={selectedMovie} handleBackButtonClick={handleBackButtonClick} />
-      )}
+    <div className="main-content">
+      <MainView />
     </div>
   );
 };
 
-// Finds the root of your app
-const container = document.querySelector("#root");
-const root = ReactDOM.createRoot(container);
-
-// Tells React to render your app in the root DOM element
-root.render(<MyFlixApplication />);
+// Use createRoot instead of ReactDOM.render
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <MyFlixApplication />
+  </React.StrictMode>
+);

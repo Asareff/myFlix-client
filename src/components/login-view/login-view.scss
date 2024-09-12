@@ -1,0 +1,74 @@
+/* Form container */
+.form-container {
+  max-width: 400px; 
+  margin: auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form input fields */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Form labels */
+.form-label {
+  margin-top: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+/* Form input fields */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+/* Form input fields focus */
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Submit button */
+.draw-border {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f9f9f9;
+  color: #fff; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.8s ease;
+}
+
+/* Submit button hover */
+.draw-border:hover {
+  background: #f9f9f9 !important;
+}
+
+input#formUsername {
+  font-family: 'Roboto', sans-serif;
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
+input#formPassword {
+  font-family: 'Roboto', sans-serif;
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
+input#formEmail {
+  font-family: 'Roboto', sans-serif;
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
